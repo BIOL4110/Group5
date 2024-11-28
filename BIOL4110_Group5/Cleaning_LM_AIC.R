@@ -32,8 +32,8 @@ habitats <- habitat_data[!duplicated(habitat_data$Sampling_Site), ]
 DATA_FRAME <- merge(DATAFRAME, habitats, by = "Sampling_Site", all.x = TRUE)
 print(DATA_FRAME)
 
-#make sure data frame has only important columns
-DATA_FRAME2<-DATA_FRAME %>%
+#make sure data frame has only important columns and filter for only mallards and BWTE
+DATA_FRAME2<-filter(DATA_FRAME, Species.x=="BWTE"|Species.x=="MALL"|Species.y=="BWTE"|Species.y=="MALL") %>%
   select(proportion,Sampling_Site,Month_sampling,Temperature,Type_Of_Site,n,Sex)
 
 # run linear model with proportion AIV infected as response variable, and the rest as predictor variables
@@ -46,11 +46,10 @@ model<-lm(proportion~Sex+Month_sampling+Temperature+Type_Of_Site+n,data=DATA_FRA
 #Type of site = habitat type (pond, lake, river, etc)
 #n = total number of mallards/ducks observed in each site
 
-install.packages("MuMIn")
 library(MuMIn)
 
 #run dredge function to find AIC values
 mod_sel<-dredge(model)
-
-
+View(mod_sel)
+View(model)
 
