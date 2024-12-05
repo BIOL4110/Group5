@@ -50,4 +50,3 @@ library(MuMIn)
 #run dredge function to find AIC values
 mod_sel<-dredge(lm_model)
 View(mod_sel)
-View(model)
